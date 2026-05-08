@@ -35,7 +35,7 @@ jobs:
 
     env:
       AWS_REGION: us-east-1
-      S3_BUCKET: devops-bucket-189399646295
+      S3_BUCKET: mi-pipeline-source-189399646295
       INSTANCE_ID: i-0e94eb56da9c80125
 
     steps:
