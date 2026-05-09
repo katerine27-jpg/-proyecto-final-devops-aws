@@ -35,7 +35,7 @@ jobs:
 
     env:
       AWS_REGION: us-east-1
-      S3_BUCKET: mi-pipeline-source-189399646295
+      S3_BUCKET: devops-bucket-189399646295
       INSTANCE_ID: i-0e94eb56da9c80125
 
     steps:
@@ -50,32 +50,22 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Comprimir aplicación
-        run: |
-          zip -r app.zip docker/
-
-      - name: Subir artefacto a S3
-        run: |
-          aws s3 cp app.zip s3://$S3_BUCKET/app.zip
-
       - name: Desplegar en EC2 usando SSM
         run: |
           aws ssm send-command \
             --instance-ids "$INSTANCE_ID" \
             --document-name "AWS-RunShellScript" \
-            --comment "Deploy aplicación Flask Docker" \
+            --comment "Deploy aplicación Flask Docker desde GitHub Actions" \
             --parameters 'commands=[
-              "sudo dnf update -y",
-              "sudo dnf install -y docker unzip awscli",
+              "cd /home/ec2-user/environment/-proyecto-final-devops-aws",
+              "git pull origin main",
+              "zip -r app.zip docker/",
+              "aws s3 cp app.zip s3://devops-bucket-189399646295/app.zip",
               "sudo service docker start",
-              "cd /home/ec2-user",
-              "aws s3 cp s3://devops-bucket-189399646295/app.zip app.zip",
-              "rm -rf app-deploy",
-              "mkdir app-deploy",
-              "unzip -o app.zip -d app-deploy",
-              "cd app-deploy/docker",
+              "cd docker",
               "sudo docker rm -f web || true",
               "sudo docker build -t docker-web .",
-              "sudo docker run -d --name web -p 5000:5000 docker-web"
+              "sudo docker run -d --name web -p 5000:5000 docker-web",
+              "sudo docker ps"
             ]' \
             --region "$AWS_REGION"
