@@ -36,7 +36,7 @@ jobs:
     env:
       AWS_REGION: us-east-1
       S3_BUCKET: devops-bucket-189399646295
-      INSTANCE_ID: i-06fcb7472e02549a9
+      INSTANCE_ID: i-0d1a55ea3d3e6cb5c
 
     steps:
       - name: Descargar código
