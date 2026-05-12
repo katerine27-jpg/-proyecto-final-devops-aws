@@ -8,9 +8,12 @@ Resources:
       InstanceType: t2.micro
       ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64}}'
       IamInstanceProfile: LabInstanceProfile
-      SubnetId: subnet-04ca4127ef3c7f95a
-      SecurityGroupIds:
-        - sg-029642d18afcfc952
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          SubnetId: subnet-04ca4127ef3c7f95a
+          GroupSet:
+            - sg-029642d18afcfc952
       Tags:
         - Key: Name
           Value: DevOps-EC2-CloudFormation
@@ -30,3 +33,4 @@ Outputs:
   BucketName:
     Description: Nombre del bucket S3 creado
     Value: !Ref DevOpsBucket
+
