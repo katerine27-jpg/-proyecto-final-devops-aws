@@ -1,0 +1,36 @@
+{
+  "widgets": [
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [ "AWS/EC2", "CPUUtilization", "InstanceId", "i-04259138eec0df4b7" ]
+        ],
+        "period": 300,
+        "stat": "Average",
+        "region": "us-east-1",
+        "title": "Consumo de CPU EC2"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [ "AWS/S3", "NumberOfObjects", "BucketName", "devops-bucket-189399646295", "StorageType", "AllStorageTypes" ]
+        ],
+        "period": 86400,
+        "stat": "Average",
+        "region": "us-east-1",
+        "title": "Número de objetos en S3"
+      }
+    }
+  ]
+}
